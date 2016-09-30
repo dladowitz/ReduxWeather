@@ -1,28 +1,34 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchWeather } from '../actions/index'
-import { bindActionCreators } from 'redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 
 class WeatherList extends Component {
   constructor(props){
     super(props)
   }
 
-  renderCities(){
-    co
-    var counter = 0
+  renderCity(city){
+    const name = city.city.name
+    const temps = city.list.map(weatherData => weatherData.main.temp)
+    const humidity = city.list.map(weatherData => weatherData.main.humidity)
+    const pressure = city.list.map(weatherData => weatherData.main.pressure)
 
-    return this.props.weather.map((city) => {
-      counter = counter + 1;
-      return (
-        <tr key={counter}>
-          <td>{city.city.name}</td>
-          <td>{city.list[0].main.temp}</td>
-          <td>{city.list[0].main.humidity}</td>
-          <td>{city.list[0].main.pressure}</td>
-        </tr>
-      );
-    });
+    console.log("Temps: ", temps);
+
+    return (
+      <tr>
+      //   <td>{name}</td>
+        // <td>
+        //   Weather
+          // <Sparklines height={120} width={180} data={temps}>
+          //   <SparklinesLine color={red} />
+          // </Sparklines
+        // </td>
+        // <td>{city.list[0].main.temp}</td>
+        // <td>{city.list[0].main.humidity}</td>
+        // <td>{city.list[0].main.pressure}</td>
+      </tr>
+    )
   }
 
   render (){
@@ -38,14 +44,12 @@ class WeatherList extends Component {
           </tr>
         </thead >
         <tbody>
-          {this.renderCities()}
+          {this.props.weather.map(city => this.renderCity(city)) }
         </tbody>
-
       </table>
     )
   }
 }
-
 
 function mapStateToProps(state){
   return {
@@ -57,19 +61,4 @@ function mapStateToProps(state){
 //   return { weather }
 // }
 
-
-// function mapStateToProps(state){
-//   return {
-//     books: state.books
-//   }
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ fetchWeather }, dispatch)
-// }
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ selectBook: selectBook}, dispatch);
-// }
-
 export default connect(mapStateToProps)(WeatherList);
-// export default connect(mapStateToProps, mapDispatchToProps)(BookList);
